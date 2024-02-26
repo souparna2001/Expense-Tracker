@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here
 class Transaction(models.Model):
@@ -10,7 +11,7 @@ class Transaction(models.Model):
     )
     type=models.CharField(max_length=200,choices=options,default="expense")
     cat_options=(
-        ("fuel","fuel"),
+        ("fuel","fuel"),                
         ("food","food"),
         ("entertainment","entertainment"),
         ("emi","emi"),
@@ -19,7 +20,9 @@ class Transaction(models.Model):
     )
     category=models.CharField(max_length=200,choices=cat_options,default="miscellaneous")
     created_date=models.DateTimeField(auto_now_add=True,blank=True)
-    user=models.CharField(max_length=200)
+    user_object=models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return self.title 
+    
+    
